@@ -119,10 +119,8 @@ class Integral:
             integral_sum += self.function.evaluate(x) * equipment.delta
         return integral_sum
 
-
     def string_value(self):
         return self.function.string_value()
-
 
     def graphic(self, equipment):
         sum_x = []
@@ -145,43 +143,21 @@ class Integral:
         plt.show()
 
 
+def print_result(equipment, integral):
+    sys.stdout.write("Function: f(x) = " + integral.string_value())
+    sys.stdout.write(" Integration interval: " + equipment.string_value())
+    sys.stdout.write(" Calculated value: " + str(integral.evaluate(equipment)) + "\n")
+    integral.graphic(equipment)
+
+
 split_points = int(input("Input number of split points: "))
 equipment_type = EquipmentType(int(input("Choose number of equipment selection method: 1 - left, 2 - middle, "
                                          "3 - right, 4 - random: ")))
 
-first_equipment = Equipment(0, 3, split_points, equipment_type)
-second_equipment = Equipment(0, 1, split_points, equipment_type)
-third_equipment = Equipment(-1, 1, split_points, equipment_type)
-fourth_equipment = Equipment(0, 0.5, split_points, equipment_type)
-fifth_equipment = Equipment(0, 1, split_points, equipment_type)
-
-first_integral = Integral(Power(Const(5), Variable("x")))
-second_integral = Integral(Power(Const(math.e), Variable("x")))
-third_integral = Integral(Power(Const(math.e), Negate(Variable("x"))))
-fourth_integral = Integral(Power(Const(math.e), Multiply(Const(3), Variable("x"))))
-fifth_integral = Integral(Power(Const(math.e), Multiply(Const(2), Variable("x"))))
-
-sys.stdout.write("Function: f(x) = " + first_integral.string_value())
-sys.stdout.write(" Integration interval: " + first_equipment.string_value())
-sys.stdout.write(" Calculated value: " + str(first_integral.evaluate(first_equipment)) + "\n")
-first_integral.graphic(first_equipment)
-
-sys.stdout.write("Function: f(x) = " + second_integral.string_value())
-sys.stdout.write(" Integration interval: " + second_equipment.string_value())
-sys.stdout.write(" Calculated value: " + str(second_integral.evaluate(second_equipment)) + "\n")
-second_integral.graphic(second_equipment)
-
-sys.stdout.write("Function: f(x) = " + third_integral.string_value())
-sys.stdout.write(" Integration interval: " + third_equipment.string_value())
-sys.stdout.write(" Calculated value: " + str(third_integral.evaluate(third_equipment)) + "\n")
-third_integral.graphic(third_equipment)
-
-sys.stdout.write("Function: f(x) = " + fourth_integral.string_value())
-sys.stdout.write(" Integration interval: " + fourth_equipment.string_value())
-sys.stdout.write(" Calculated value: " + str(fourth_integral.evaluate(fourth_equipment)) + "\n")
-fourth_integral.graphic(fourth_equipment)
-
-sys.stdout.write("Function: f(x) = " + fifth_integral.string_value())
-sys.stdout.write(" Integration interval: " + fifth_equipment.string_value())
-sys.stdout.write(" Calculated value: " + str(fifth_integral.evaluate(fifth_equipment)) + "\n")
-fifth_integral.graphic(fifth_equipment)
+print_result(Equipment(0, 3, split_points, equipment_type), Integral(Power(Const(5), Variable("x"))))
+print_result(Equipment(0, 1, split_points, equipment_type), Integral(Power(Const(math.e), Variable("x"))))
+print_result(Equipment(-1, 1, split_points, equipment_type), Integral(Power(Const(math.e), Negate(Variable("x")))))
+print_result(Equipment(0, 0.5, split_points, equipment_type),
+             Integral(Power(Const(math.e), Multiply(Const(3), Variable("x")))))
+print_result(Equipment(0, 1, split_points, equipment_type),
+             Integral(Power(Const(math.e), Multiply(Const(2), Variable("x")))))
